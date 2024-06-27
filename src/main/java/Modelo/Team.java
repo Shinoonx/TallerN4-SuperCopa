@@ -1,5 +1,6 @@
 package Modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Team {
@@ -7,6 +8,13 @@ public class Team {
     private int ranking;
     private String bandera;
     private List<Player> players;
+
+    public Team(String nombre, int ranking, String bandera) {
+        this.nombre = nombre;
+        this.ranking = ranking;
+        this.bandera = bandera;
+        this.players = new ArrayList<>();
+    }
 
     public String getNombre() {
         return nombre;

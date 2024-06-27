@@ -1,7 +1,5 @@
 package Modelo;
 
-import java.util.List;
-
 public class Player {
     public enum Posicion {
         GK, DF, MF, FW
@@ -10,6 +8,12 @@ public class Player {
     private String nombre;
     private int numero;
     private Posicion posicion;
+
+    public Player(String nombre, int numero, Posicion posicion) {
+        this.nombre = nombre;
+        this.numero = numero;
+        this.posicion = posicion;
+    }
 
     public String getNombre() {
         return nombre;
