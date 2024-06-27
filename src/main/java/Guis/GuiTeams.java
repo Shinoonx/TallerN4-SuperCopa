@@ -36,10 +36,10 @@ public class GuiTeams extends JFrame implements ActionListener {
     private void loadTeams() {
 
         teams = new ArrayList<>();
-        teams.add(new Team("Chile", 2, "src/main/resources/chi.png"));
-        teams.add(new Team("Alemania", 1, "src/main/resources/ger.png"));
-        teams.add(new Team("Camerun", 1, "src/main/resources/cmr.png"));
-        teams.add(new Team("Australia", 1, "src/main/resources/aus.png"));
+        teams.add(new Team("chile", 2, "src/main/resources/chi.png"));
+        teams.add(new Team("alemania", 1, "src/main/resources/ger.png"));
+        teams.add(new Team("camerun", 1, "src/main/resources/cmr.png"));
+        teams.add(new Team("australia", 1, "src/main/resources/aus.png"));
 
 
         for (Team team : teams) {
@@ -60,12 +60,23 @@ public class GuiTeams extends JFrame implements ActionListener {
                     .orElse(null);
 
             if (selectedTeam != null) {
-                String filePath = "src/main/resources/" + selectedCountry.toLowerCase() + ".txt";
-                List<Player> players = DataPlayers.loadPlayersFromFile(filePath);
-                selectedTeam.setPlayers(players);
+                loadPlayersForCountry(selectedCountry);
                 new GuiPlayers(selectedTeam);
                 setVisible(false);
             }
+        }
+    }
+
+    private void loadPlayersForCountry(String country) {
+        String filePath = "src/main/resources/" + country.toLowerCase() + ".txt";
+        List<Player> players = DataPlayers.loadPlayersFromFile(filePath);
+        if (players.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron jugadores para " + country, "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            teams.stream()
+                    .filter(team -> team.getNombre().equals(country))
+                    .findFirst()
+                    .ifPresent(team -> team.setPlayers(players));
         }
     }
 }
